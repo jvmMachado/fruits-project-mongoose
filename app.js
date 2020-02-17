@@ -28,13 +28,19 @@ const orange = new Fruit ({
     review: `Makes for a great juice. Kinda sour though.`
 });
 
-const kiwi = new Fruit ({
+const banana = new Fruit ({
     name: 'Banana',
     rating: 10,
     review: `The best fruit out there!.`
 });
 
-Fruit.insertMany
+Fruit.insertMany([kiwi, orange, banana], function(err){
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Successfully saved all the fruits to fruitsDB');
+    }
+});
 
 /*
 
