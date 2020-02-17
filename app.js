@@ -3,14 +3,25 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/fruitsDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const fruitSchema = new mongoose.Schema ({
-    name: String,
-    rating: Number,
+    name: {
+        type: String,
+        required: [true, 'Please, enter a name.']
+    },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 10,
+        validate: {
+            validator: Number.isInteger,
+            message: '{VALUE} is not an integer value'
+        }
+    },
     review: String  
 });
 
 const Fruit = mongoose.model('Fruit', fruitSchema);
 
-const fruit = new Fruit ({
+const apple = new Fruit ({
     name: 'Apple',
     rating: 7,
     review: 'Pretty solid as a fruit.'
@@ -34,7 +45,7 @@ const banana = new Fruit ({
     review: `The best fruit out there!.`
 });
 
-Fruit.insertMany([kiwi, orange, banana], function(err){
+Fruit.insertMany([apple, kiwi, orange, banana], function(err){
     if (err) {
         console.log(err);
     } else {
