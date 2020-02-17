@@ -56,6 +56,39 @@ Fruit.insertMany([apple, kiwi, orange, banana], function(err) {
   }
 });
 
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please, enter a name.']
+  },
+  age: {
+    type: Number,
+    min: 0,
+    max: 150,
+    validate: {
+      validator: Number.isInteger,
+      message: '{VALUE} is not an integer value'
+    }
+  },
+  favouriteFruit: fruitSchema
+});
+
+const Person = mongoose.model('Person', personSchema);
+
+const person = new Person({
+  name: 'John',
+  age: '25',
+  favouriteFruit: banana
+});
+
+person.save(err => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('Successfully saved the person document.');
+  }
+});
+
 Fruit.updateOne({ name: 'Apple' }, { name: 'Peach' }, err => {
   if (err) {
     console.log(err);
