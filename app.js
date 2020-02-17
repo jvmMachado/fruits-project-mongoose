@@ -42,20 +42,14 @@ Fruit.insertMany([kiwi, orange, banana], function(err){
     }
 });
 
-/*
+Fruit.find(function(err, fruits){
+    if (err) {
+        console.log(err)
+    } else {
+        fruits.forEach(fruit => {
+            console.log(fruit.name);
+        });
 
-const personSchema = new mongoose.Schema ({
-    name: String,
-    age:  Number
+        mongoose.connection.close();
+    }
 });
-
-const Person = mongoose.model('Person', personSchema);
-
-const person = new Person ({
-    name: 'John',
-    age: 25
-});
-
-person.save();
-
-*/
